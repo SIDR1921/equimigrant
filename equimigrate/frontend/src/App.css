@@ -1,0 +1,257 @@
+/* ══════════════════════════════════════════
+   APP LAYOUT — EDITORIAL CINEMATIC
+   ══════════════════════════════════════════ */
+
+#root {
+  min-height: 100vh;
+}
+
+/* ── Tab navigation (pill bar) ──────────── */
+.tab-nav {
+  display: flex;
+  gap: 2px;
+  background: rgba(22, 19, 16, 0.6);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  padding: 5px;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm), inset 0 1px 0 rgba(255, 255, 255, 0.02);
+}
+
+.tab-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 13px 18px;
+  background: transparent;
+  border: none;
+  border-radius: calc(var(--radius-lg) - 5px);
+  color: var(--text-muted);
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  white-space: nowrap;
+  position: relative;
+}
+
+.tab-btn:hover {
+  color: var(--text-secondary);
+  background: rgba(40, 35, 32, 0.6);
+}
+
+.tab-btn.active {
+  color: var(--accent-bright);
+  background: linear-gradient(135deg, rgba(40, 35, 32, 0.9), rgba(30, 26, 22, 0.95));
+  box-shadow: var(--shadow-md), 0 0 20px rgba(200, 149, 108, 0.06);
+  border: 1px solid var(--border-strong);
+}
+
+/* Glowing bottom bar on active tab */
+.tab-btn.active::after {
+  content: '';
+  position: absolute;
+  bottom: 6px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 24px;
+  height: 2px;
+  background: var(--accent);
+  border-radius: 2px;
+  box-shadow: 0 0 10px rgba(200, 149, 108, 0.5);
+}
+
+.tab-btn svg {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+/* Responsive tab text */
+@media (max-width: 640px) {
+  .tab-btn {
+    padding: 10px 8px;
+    font-size: 11px;
+  }
+
+  .tab-btn .tab-label {
+    display: none;
+  }
+
+  .tab-btn.active::after {
+    width: 16px;
+  }
+}
+
+/* ── Result grid layout ────────────────── */
+.result-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+@media (min-width: 768px) {
+  .result-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.result-grid .span-full {
+  grid-column: 1 / -1;
+}
+
+/* ── Drag-and-drop zone (premium) ──────── */
+.drop-zone {
+  position: relative;
+  border: 2px dashed var(--border-strong);
+  border-radius: var(--radius-xl);
+  padding: 56px 32px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  background: radial-gradient(ellipse at center, rgba(200, 149, 108, 0.03) 0%, var(--bg-surface) 70%);
+  overflow: hidden;
+}
+
+/* Subtle shimmer overlay on hover */
+.drop-zone::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at center, rgba(200, 149, 108, 0.05) 0%, transparent 60%);
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+
+.drop-zone:hover::before,
+.drop-zone.active::before {
+  opacity: 1;
+}
+
+.drop-zone:hover,
+.drop-zone.active {
+  border-color: var(--accent);
+  box-shadow: 0 0 40px rgba(200, 149, 108, 0.08), inset 0 0 40px rgba(200, 149, 108, 0.03);
+}
+
+.drop-zone input[type="file"] {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+/* ── Voice waveform bars ──────────────── */
+.waveform-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  height: 40px;
+}
+
+.waveform-bar {
+  width: 4px;
+  background: linear-gradient(to top, var(--accent-dim), var(--accent-bright));
+  border-radius: 2px;
+  animation: waveform 0.8s infinite ease-in-out;
+}
+
+.waveform-bar:nth-child(1) {
+  animation-delay: 0s;
+  height: 12px;
+}
+
+.waveform-bar:nth-child(2) {
+  animation-delay: 0.1s;
+  height: 20px;
+}
+
+.waveform-bar:nth-child(3) {
+  animation-delay: 0.2s;
+  height: 28px;
+}
+
+.waveform-bar:nth-child(4) {
+  animation-delay: 0.3s;
+  height: 16px;
+}
+
+.waveform-bar:nth-child(5) {
+  animation-delay: 0.15s;
+  height: 24px;
+}
+
+.waveform-bar:nth-child(6) {
+  animation-delay: 0.25s;
+  height: 18px;
+}
+
+.waveform-bar:nth-child(7) {
+  animation-delay: 0.05s;
+  height: 14px;
+}
+
+/* ── Page transitions ─────────────────── */
+.page-enter {
+  animation: fadeSlideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* ── Page content atmospheric background ── */
+.page-content-atmosphere {
+  position: relative;
+}
+
+.page-content-atmosphere::before {
+  content: '';
+  position: absolute;
+  top: -60px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 600px;
+  height: 400px;
+  background: radial-gradient(ellipse, rgba(200, 149, 108, 0.04) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* ── Section divider ─────────────────── */
+.divider-gradient {
+  height: 1px;
+  background: linear-gradient(90deg,
+      transparent 0%,
+      var(--border-strong) 30%,
+      var(--accent-dim) 50%,
+      var(--border-strong) 70%,
+      transparent 100%);
+  border: none;
+}
+
+/* ── Decorative floating orb ───────────── */
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(200, 149, 108, 0.12), transparent 70%);
+  pointer-events: none;
+  animation: orbFloat 8s ease-in-out infinite;
+}
+
+.orb-1 {
+  width: 200px;
+  height: 200px;
+  top: 10%;
+  right: -5%;
+  animation-delay: 0s;
+}
+
+.orb-2 {
+  width: 140px;
+  height: 140px;
+  bottom: 20%;
+  left: -3%;
+  animation-delay: -3s;
+}
